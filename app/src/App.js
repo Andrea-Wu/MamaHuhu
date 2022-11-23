@@ -16,6 +16,18 @@ class InputTextBox extends React.Component {
   }
 
   handleSubmit(event) {
+		// See if integration with backend works.		
+		var request = {"input": this.state.value};
+    fetch("/SubmitInputText",
+			{ method: "POST",
+				headers: {"Content-Type": "application/json"},
+				mode: "cors", // cross-origin server
+				body: JSON.stringify(request),
+			}
+		)
+    .then((res) => res.json())
+	  .then((data) => { console.log(data)});
+  
     alert('A name was submitted: ' + this.state.value);
     event.preventDefault();
   }
@@ -28,7 +40,7 @@ class InputTextBox extends React.Component {
         </label>
         <textarea type="text" rows="10" cols="50"
 				value={this.state.value} onChange={this.handleChange} />
-				<input type="submit" value="Submit" />
+				<input type="submit" value="Submit" name="input"/>
       </form>
     );
   }
